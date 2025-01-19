@@ -1,0 +1,100 @@
+/* src/styles/MyRecipes.css */
+.my-recipes-page {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .my-recipes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .add-recipe-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .recipe-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .recipe-content {
+    padding: 1rem;
+  }
+  
+  .recipe-description {
+    color: #666;
+    margin: 0.5rem 0;
+  }
+  
+  .recipe-status {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  
+  .recipe-status .approved {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .recipe-status .pending {
+    color: #ffc107;
+    font-weight: bold;
+  }
+  
+  .recipe-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .edit-btn, .delete-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
