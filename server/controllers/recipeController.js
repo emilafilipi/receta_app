@@ -685,7 +685,7 @@ createCategory: async (req, res) => {
   }
 },
 
-  updateRecipe: async (req, res) => {
+  updateRecipe: async (req, res, next) => {
     const connection = await pool.getConnection();
     try {
       const { id } = req.params;
@@ -698,8 +698,8 @@ createCategory: async (req, res) => {
       
       // Verify ownership
       const [recipe] = await connection.execute(
-        'SELECT * FROM recetat WHERE receta_id = ? AND perdoruesi_id = ?',
-        [id, req.user.id]
+        'SELECT * FROM recetat WHERE receta_id = ? AND (perdoruesi_id = ? OR locked_by = ?)',
+        [id, req.user.id, req.user.id]
       );
   
       if (recipe.length === 0) {
@@ -834,6 +834,7 @@ createCategory: async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     } finally {
       connection.release();
+      next();
     }
   },
 

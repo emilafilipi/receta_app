@@ -109,7 +109,10 @@ const fetchRecipes = async (ingredients = selectedIngredients, strict = strictIn
       });
 
     const matchesSearch = recipe.titulli.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !filters.category || recipe.kategoria_id === parseInt(filters.category);
+    // const matchesCategory = !filters.category || recipe.kategoria_id === parseInt(filters.category);
+    const matchesCategory = !filters.category || 
+    (recipe.categories && recipe.categories.some(cat => cat.id === parseInt(filters.category)));
+ 
     const matchesDifficulty = !filters.difficulty || recipe.veshtiresia_id === parseInt(filters.difficulty);
     const matchesCuisine = !filters.cuisine || recipe.lloji_kuzhines === filters.cuisine;
     const matchesFavorites = !filters.favorites || Boolean(recipe.is_favorite);
@@ -138,6 +141,110 @@ const fetchRecipes = async (ingredients = selectedIngredients, strict = strictIn
       <Navbar />
       <div className="dashboard-content">
         <div className="search-filter-section">
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Kërko receta..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+          
+          <div className="filters">
+          {user && ( // Only show favorites filter for logged-in users
+              <label className="filter-checkbox">
+                <input
+                  type="checkbox"
+                  checked={filters.favorites}
+                  onChange={(e) => setFilters({ 
+                    ...filters, 
+                    favorites: e.target.checked 
+                  })}
+                />
+                Shfaq Vetëm Recetat e Preferuara
+              </label>
+            )}
+            <select
+              value={filters.category}
+              onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+              className="filter-select"
+            >
+              <option value="">Kategoritë</option>
+              {filterOptions.categories.map(category => (
+                <option key={category.kategoria_id} value={category.kategoria_id}>
+                  {category.emri}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filters.difficulty}
+              onChange={(e) => setFilters({ ...filters, difficulty: e.target.value })}
+              className="filter-select"
+            >
+              <option value="">Nivelet e Vështirësisë</option>
+              {filterOptions.difficultyLevels.map(level => (
+                <option key={level.veshtiresia_id} value={level.veshtiresia_id}>
+                  {level.emri}
+                </option>
+              ))}
+            </select>
+
+            <button
+                onClick={() => setIsIngredientModalOpen(true)}
+                className="filter-button"
+            >
+                Filtro sipas Përbërësve
+            </button>
+
+          </div>
+        </div>
+
+        {loading && <div className="loading">Duke ngarkuar recetat...</div>}
+        {error && <div className="error-message">{error}</div>}
+        <div className='recipes-container'>
+        <div className="recipes-grid">
+          {filteredRecipes.map(recipe => (
+            <div key={recipe.receta_id} 
+                className="recipe-card" 
+                onClick={() => navigate(`/recipe/${recipe.receta_id}`)} 
+                style={{ cursor: 'pointer'}}>
+            
+              {recipe.url_media && (
+                <img 
+                  src={getImageUrl(recipe)}
+                  alt={recipe.titulli} 
+                  className="recipe-image"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/placeholder-recipe.jpg';
+                  }}
+                />
+              )}
+              {user && recipe.is_favorite === 1 && (
+                <div className="favorite-badge">
+                  ❤️ E preferuar
+                </div>
+              )}
+              <div className="recipe-content">
+                <h3 className="recipe-title">{recipe.titulli}</h3>
+                <p className="recipe-description">{recipe.pershkrimi}</p>
+                <div className="recipe-meta">
+                  <span> {recipe.veshtiresia}</span>
+                  <span>•</span>
+                  <span>⌚ {recipe.koha_gatimi} min</span>
+                </div>
+              </div>
+              <div className="recipe-average-rating">
+              {recipe.mesatarja_yjeve ? Number(recipe.mesatarja_yjeve).toFixed(1) : 'Nuk ka vlerësime'} 
+              </div>
+              
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* <div className="search-filter-section">
           <div className="search-bar">
             <input
               type="text"
@@ -197,47 +304,7 @@ const fetchRecipes = async (ingredients = selectedIngredients, strict = strictIn
             </button>
 
           </div>
-        </div>
-
-        {loading && <div className="loading">Duke ngarkuar recetat...</div>}
-        {error && <div className="error-message">{error}</div>}
-        
-        <div className="recipes-grid">
-          {filteredRecipes.map(recipe => (
-            <div key={recipe.receta_id} 
-                className="recipe-card" 
-                onClick={() => navigate(`/recipe/${recipe.receta_id}`)} 
-                style={{ cursor: 'pointer'}}>
-            
-              {recipe.url_media && (
-                <img 
-                  src={getImageUrl(recipe)}
-                  alt={recipe.titulli} 
-                  className="recipe-image"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = '/placeholder-recipe.jpg';
-                  }}
-                />
-              )}
-              {user && recipe.is_favorite === 1 && (
-                <div className="favorite-badge">
-                  ❤️ E preferuar
-                </div>
-              )}
-              <div className="recipe-content">
-                <h3 className="recipe-title">{recipe.titulli}</h3>
-                <p className="recipe-description">{recipe.pershkrimi}</p>
-                <div className="recipe-meta">
-                  <span>Niveli i Vështirësisë: {recipe.veshtiresia}</span>
-                  <span>•</span>
-                  <span>{recipe.koha_gatimi} min</span>
-                </div>
-              </div>
-              
-            </div>
-          ))}
-        </div>
+        </div> */}
       </div>
       <IngredientFilterModal
             isOpen={isIngredientModalOpen}

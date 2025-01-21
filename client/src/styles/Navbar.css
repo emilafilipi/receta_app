@@ -1,5 +1,6 @@
 .navbar {
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
+    background-color: #f3dad7;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -8,6 +9,7 @@
   }
   
   .navbar-brand .nav-link {
+    font-family: Vladimir Script;
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
@@ -122,7 +124,6 @@
 /* src/styles/Navbar.css */
 .navbar {
   position: relative; /* Add this */
-  background-color: #ffffff;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;

@@ -30,14 +30,14 @@ function Login() {
       login(data);
       navigate('/dashboard');
     } catch (err) {
-      setError('Invalid username/email or password');
+      setError('Emër përdoruesi ose fjalëkalim i gabuar');
     }
   };
 
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2 className="login-title">Hyni ne llogarine tuaj</h2>
+        <h2 className="login-title">Hyni në llogarinë tuaj</h2>
         
         {error && <div className="error-message">{error}</div>}
         

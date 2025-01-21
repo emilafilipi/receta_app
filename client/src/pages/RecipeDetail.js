@@ -435,7 +435,7 @@ function RecipeDetail() {
           <div className="recipe-sidebar">
                         
             <div className="recipe-categories">
-              <h3>Kategoria</h3>
+              <h2>Kategoria</h2>
               {recipe.categories?.map((category) => (
                 <span key={category.kategoria_id} className="category-tag">
                   {category.emri}

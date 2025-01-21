@@ -341,7 +341,7 @@ function AddRecipe() {
 
             <div className="form-row">
               <div className="form-group">
-                <label>Koha e Përgatitjes (minuta)</label>
+                <label>Koha e Përgatitjes (min)</label>
                 <input
                   type="number"
                   value={formData.koha_pergatitja}
@@ -351,7 +351,7 @@ function AddRecipe() {
               </div>
 
               <div className="form-group">
-                <label>Koha e Gatimit (minuta)</label>
+                <label>Koha e Gatimit (min)</label>
                 <input
                   type="number"
                   value={formData.koha_gatimi}
@@ -362,6 +362,8 @@ function AddRecipe() {
 
               <div className="form-group">
                 <label>Numri i Racioneve</label>
+                <label></label>
+                <label></label>
                 <input
                   type="number"
                   value={formData.nr_racione}
@@ -492,7 +494,7 @@ function AddRecipe() {
           </div>
 
           <div className="form-section">
-            <h2>Përbërësit</h2>
+            <h3>Përbërësit</h3>
             <div className="ingredients-header">
                 <button type="button" onClick={handleIngredientAdd} className="add-btn">
                 Shto përbërës
@@ -591,7 +593,7 @@ function AddRecipe() {
           </div>
 
           <div className="form-section">
-            <h2>Hapat e Përgatitjes</h2>
+            <h3>Hapat e Përgatitjes</h3>
             <button type="button" onClick={handleStepAdd} className="add-btn">
               Shto hap
             </button>

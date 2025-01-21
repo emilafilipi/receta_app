@@ -31,6 +31,45 @@ const [formData, setFormData] = useState({
     name: '',
     description: ''
   });
+  const [lockError, setLockError] = useState(null);
+
+  useEffect(() => {
+    const checkLock = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/recipes/${recipe.receta_id}/lock`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                setLockError(data.message);
+                setTimeout(onClose, 3000); // Close modal after showing error
+            }
+        } catch (error) {
+            console.error('Error checking lock:', error);
+            setLockError('Error checking recipe lock status');
+            setTimeout(onClose, 3000);
+        }
+    };
+
+    checkLock();
+
+    // Release lock when component unmounts
+    return async () => {
+        try {
+            await fetch(`http://localhost:5000/api/recipes/${recipe.receta_id}/lock`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+        } catch (error) {
+            console.error('Error releasing lock:', error);
+        }
+    };
+}, [recipe.receta_id]);
 
   useEffect(() => {
     if (recipe) {
@@ -445,6 +484,19 @@ const [formData, setFormData] = useState({
       return null;
     }
   };
+
+  if (lockError) {
+    return (
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <div className="error-message">
+                    {lockError}
+                </div>
+            </div>
+        </div>
+    );
+}
+
 
   return (
     <div className="modal-overlay">

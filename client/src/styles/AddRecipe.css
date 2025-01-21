@@ -1,6 +1,6 @@
 .add-recipe-page {
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-color: #f9f1f0;
   }
   
   .add-recipe-container {
@@ -36,6 +36,9 @@
     display: block;
     margin-bottom: 0.5rem;
     color: #555;
+    font-family: Segoe Script;
+    font-weight: bold;
+    font-size: 1.17rem;
   }
   
   .form-group input,
@@ -118,8 +121,8 @@
   }
   
   .submit-btn {
-    background: #007bff;
-    color: white;
+    background: #f8c9c3;
+    color: black;
     border: none;
   }
   
