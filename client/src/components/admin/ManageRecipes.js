@@ -165,13 +165,13 @@ function ManageRecipes() {
                     //   onClick={() => navigate(`/recipe/${recipe.receta_id}/edit`)}
                       onClick={() => handleEdit(recipe)}
                     >
-                      Edit
+                      Redakto
                     </button>
                     <button 
                       className="delete-button"
                       onClick={() => handleDelete(recipe.receta_id)}
                     >
-                      Delete
+                      Fshi
                     </button>
                   </div>
                 </td>

@@ -152,7 +152,7 @@ const fetchRecipes = async (ingredients = selectedIngredients, strict = strictIn
           </div>
           
           <div className="filters">
-          {user && ( // Only show favorites filter for logged-in users
+          {user && user.role !== 'admin' && ( // Only show favorites filter for logged-in users
               <label className="filter-checkbox">
                 <input
                   type="checkbox"
